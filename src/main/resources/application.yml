@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: consumption
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/consumption?serverTimezone=CST&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&autoReconnect=true
+    username: root
+    password: root
+mybatis:
+  mapper-locations:
+    classpath: com/yeff/consumption/mappers/*.xml
