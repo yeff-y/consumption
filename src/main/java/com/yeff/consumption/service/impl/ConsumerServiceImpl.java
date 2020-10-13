@@ -5,6 +5,8 @@ import com.yeff.consumption.dto.ConsumerDto;
 import com.yeff.consumption.model.Consumer;
 import com.yeff.consumption.provider.ConsumerProvider;
 import com.yeff.consumption.service.ConsumerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class ConsumerServiceImpl implements ConsumerService {
+
+    private final Logger logger = LoggerFactory.getLogger(ConsumerServiceImpl.class);
 
     @Autowired
     private ConsumerProvider consumerProvider;
