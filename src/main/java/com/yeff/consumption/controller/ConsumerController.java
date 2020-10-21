@@ -19,8 +19,8 @@ public class ConsumerController {
 
     @PostMapping("/add/record")
     public CResponse<ConsumerDto> addConsumeRecords(@RequestBody ConsumerDto consumerDto){
-        if(consumerDto.getConsumerName()==null){
-            throw  new BizException("-1","用户姓名不能为空！");
+        if(consumerDto.getConsumerName()== null){
+            throw new BizException("-1","用户姓名不能为空！");
         }
         consumerService.insertRecord(consumerDto);
         return CResponse.successT(consumerDto);
