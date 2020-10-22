@@ -15,6 +15,6 @@ public class ConsumptionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
         System.out.println("controller 之前执行");
-        return true;
+        return false;
     }
 }
