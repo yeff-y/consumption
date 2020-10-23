@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="120 seconds" debug="true">
+
+    <!-- 控制台输出 -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS}  [ %-5level ]  [ %X{traceId} ] %thread   %file:%line  %logger{36}  - %m%n</pattern>-->
+            <charset>UTF-8</charset>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5p [%file:%line] [ %X{traceId} ] - %m%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="rollingFileAppender" class="ch.qos.logback.ext.spring.DelegatingLogbackAppender"/>
+
+    <root level="INFO">
+        <appender-ref ref="rollingFileAppender" />
+        <appender-ref ref="consoleAppender" />
+    </root>
+
+</configuration>
