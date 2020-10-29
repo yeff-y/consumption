@@ -3,6 +3,7 @@ package com.yeff.consumption.provider.providerImpl;
 import com.yeff.consumption.dto.ConsumerDto;
 import com.yeff.consumption.mappers.ConsumerMapper;
 import com.yeff.consumption.model.Consumer;
+import com.yeff.consumption.model.ConsumerExample;
 import com.yeff.consumption.provider.ConsumerProvider;
 import com.yeff.consumption.service.impl.ConsumerServiceImpl;
 import org.slf4j.Logger;
@@ -30,7 +31,15 @@ public class ConsumerProviderImpl implements ConsumerProvider {
 
     @Override
     public List<Consumer> selectRecords(String name) {
-        List<Consumer> consumerList = consumerMapper.selectByName(name);
+        ConsumerExample example = _buildExample(name);
+        List<Consumer> consumerList = consumerMapper.selectByExample(example);
         return consumerList;
+    }
+
+    private ConsumerExample _buildExample(String name) {
+        ConsumerExample example = new ConsumerExample();
+        ConsumerExample.Criteria criteria = example.createCriteria();
+        criteria.andConsumerNameEqualTo(name);
+        return example;
     }
 }
