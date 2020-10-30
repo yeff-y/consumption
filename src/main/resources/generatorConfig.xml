@@ -40,11 +40,16 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <table tableName="consumer" domainObjectName="Consumer"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
+               enableInsert="true"
+               enableSelectByPrimaryKey="true"
+               enableSelectByExample="true"
+               enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true"
+               enableDeleteByExample="true"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               selectByPrimaryKeyQueryId="true"
+               selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="JDBC"/>
            <!-- <columnOverride column="sex" javaType="com.glodon.demo.mybatis.models.Sex" />-->
         </table>
