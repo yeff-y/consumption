@@ -1,6 +1,8 @@
 package com.yeff.consumption.provider.providerImpl;
 
 import com.yeff.consumption.dto.ConsumerDto;
+import com.yeff.consumption.exception.ConsumptionErrorCode;
+import com.yeff.consumption.exception.ConsumptionExceptionFactory;
 import com.yeff.consumption.mappers.ConsumerMapper;
 import com.yeff.consumption.model.Consumer;
 import com.yeff.consumption.model.ConsumerExample;
@@ -11,7 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -30,16 +36,56 @@ public class ConsumerProviderImpl implements ConsumerProvider {
     }
 
     @Override
-    public List<Consumer> selectRecords(String name) {
-        ConsumerExample example = _buildExample(name);
+    public List<Consumer> selectRecordsByName(String name) {
+        Consumer consumer = new Consumer();
+        consumer.setConsumerName(name);
+        ConsumerExample example = _buildExample(consumer);
         List<Consumer> consumerList = consumerMapper.selectByExample(example);
         return consumerList;
     }
 
-    private ConsumerExample _buildExample(String name) {
+    @Override
+    public List<Consumer> selectRecordsByDate(String date) {
+        Consumer consumer = new Consumer();
+        Date selectDate = _getDate(date);
+        consumer.setCreateTime(selectDate);
+        ConsumerExample example = _buildExample(consumer);
+        List<Consumer> consumerList = consumerMapper.selectByExample(example);
+        return consumerList;
+    }
+
+    private Date _getDate(String date) {
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        String time = date;
+        Date selectDate = null;
+        try {
+            selectDate = ft.parse(time);
+        } catch (ParseException e) {
+            logger.error("string date type convert to Date error,message: {}",e.getMessage());
+            throw ConsumptionExceptionFactory.create(ConsumptionErrorCode.STRING_DATE_TYPE_PARSE_ERROR,date);
+        }
+        return selectDate;
+    }
+
+    private ConsumerExample _buildExample(Consumer consumer) {
         ConsumerExample example = new ConsumerExample();
         ConsumerExample.Criteria criteria = example.createCriteria();
-        criteria.andConsumerNameEqualTo(name);
+
+        if (!StringUtils.isEmpty(consumer.getConsumerName())) {
+            criteria.andConsumerNameEqualTo(consumer.getConsumerName());
+        }
+        if (!StringUtils.isEmpty(consumer.getId())) {
+            criteria.andIdEqualTo(consumer.getId());
+        }
+        if (!StringUtils.isEmpty(consumer.getCategory())) {
+            criteria.andCategoryEqualTo(consumer.getCategory());
+        }
+        if (!StringUtils.isEmpty(consumer.getNecessary())) {
+            criteria.andNecessaryEqualTo(consumer.getNecessary());
+        }
+        if (!StringUtils.isEmpty(consumer.getCreateTime())) {
+            criteria.andCreateTimeLessThan(consumer.getCreateTime());
+        }
         return example;
     }
 }

@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface ConsumerService {
 
-    public void insertRecord(ConsumerDto consumerDto);
+    void insertRecord(ConsumerDto consumerDto);
 
-    public List<ConsumerDto> getRecordByName(String name);
+    List<ConsumerDto> getRecordByName(String name);
+
+    List<ConsumerDto> getRecordByTime(String date);
+
 }

@@ -9,5 +9,7 @@ public interface ConsumerProvider {
 
     public int insert(Consumer consumer);
 
-    public List<Consumer> selectRecords(String name);
+    public List<Consumer> selectRecordsByName(String name);
+
+    public List<Consumer> selectRecordsByDate(String date);
 }

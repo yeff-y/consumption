@@ -26,9 +26,15 @@ public class ConsumerController {
         return CResponse.successT(consumerDto);
     }
 
-    @GetMapping("/query/consumerName")
-    public CResponse<List<ConsumerDto>> getOneRecordByConsumerName(@RequestParam("consumerName") String consumerName){
-        List<ConsumerDto> consumerDtoList = consumerService.getRecordByName(consumerName);
+    @GetMapping("/name")
+    public CResponse<List<ConsumerDto>> getRecordsByConsumerName(@RequestParam("name") String name){
+        List<ConsumerDto> consumerDtoList = consumerService.getRecordByName(name);
+        return CResponse.successT(consumerDtoList);
+    }
+
+    @GetMapping("/date")
+    public CResponse<List<ConsumerDto>> getRecordsByTime(@RequestParam("date") String date){
+        List<ConsumerDto> consumerDtoList = consumerService.getRecordByTime(date);
         return CResponse.successT(consumerDtoList);
     }
 }

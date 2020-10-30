@@ -3,7 +3,10 @@ package com.yeff.consumption.exception;
 public enum ConsumptionErrorCode {
 
     UNKNOWN_ERROR(111001001L, "unknown error"),
-    OKHTTP_ERROR(111001002L,"okhttp error,details --> {0}");
+    NO_SUCH_NAME(111001002L,"no such records about name : {0}"),
+    ADD_RECORD_ERROR(111001003L,"add consumption record error,message --> {0}"),
+    NO_RECORD_BEFORE_THIS_DATE(111001004L,"no records before this date: {0}"),
+    STRING_DATE_TYPE_PARSE_ERROR(111001005L,"string date type parse error,date: {}");
 
     long code;
     String message;

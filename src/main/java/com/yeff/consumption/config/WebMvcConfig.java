@@ -18,7 +18,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry){
         // 1.添加ugcContextInterceptor，初始化UGCContext;
         registry.addInterceptor(consumptionInterceptor)
-                .addPathPatterns("/consumer");
+                .addPathPatterns("/consumer/go");
 
     }
 
