@@ -11,7 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+<<<<<<< HEAD
 import org.springframework.util.StringUtils;
+=======
+import org.springframework.util.CollectionUtils;
+>>>>>>> 00a0e33eac8cd7debc50cf94339858521bd4c6c0
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,20 +34,45 @@ public class ConsumerServiceImpl implements ConsumerService {
     @Override
     public void insertRecord(ConsumerDto consumerDto) {
         Consumer consumer = _of(consumerDto);
-        consumerProvider.insert(consumer);
+        if (consumerProvider.insert(consumer) != 1) {
+            logger.error("add consumption record error");
+            throw ConsumptionExceptionFactory.create(ConsumptionErrorCode.ADD_RECORD_ERROR,consumerDto);
+        }
     }
 
     @Override
     public List<ConsumerDto> getRecordByName(String name) {
+<<<<<<< HEAD
         if(StringUtils.isEmpty(name)){
             logger.error("name can not be null when get record by name");
             throw ConsumptionExceptionFactory.create(ConsumptionErrorCode.NAME_EMPTY);
         }
         List<Consumer> consumerList = consumerProvider.selectRecords(name);
+=======
+        List<Consumer> consumerList = consumerProvider.selectRecordsByName(name);
+        if(CollectionUtils.isEmpty(consumerList)){
+            logger.error("no such records about name: {}",name);
+            throw ConsumptionExceptionFactory.create(ConsumptionErrorCode.NO_SUCH_NAME,name);
+        }
+>>>>>>> 00a0e33eac8cd7debc50cf94339858521bd4c6c0
         List<ConsumerDto> consumerDtoList = new ArrayList<>();
         consumerDtoList = consumerList.parallelStream().map(consumer -> {
             ConsumerDto consumerDto = _buildConsumerDto(consumer);
-            consumerDto.setConsumerName(name);
+            return consumerDto;
+        }).collect(Collectors.toList());
+        return consumerDtoList;
+    }
+
+    @Override
+    public List<ConsumerDto> getRecordByTime(String date) {
+        List<Consumer> consumers = consumerProvider.selectRecordsByDate(date);
+        if(CollectionUtils.isEmpty(consumers)){
+            logger.error("no such records about name: {}",date);
+            throw ConsumptionExceptionFactory.create(ConsumptionErrorCode.NO_RECORD_BEFORE_THIS_DATE,date);
+        }
+        List<ConsumerDto> consumerDtoList = new ArrayList<>();
+        consumerDtoList = consumers.parallelStream().map(consumer -> {
+            ConsumerDto consumerDto = _buildConsumerDto(consumer);
             return consumerDto;
         }).collect(Collectors.toList());
         return consumerDtoList;
@@ -56,6 +85,7 @@ public class ConsumerServiceImpl implements ConsumerService {
         consumerDto.setNecessary(consumer.getNecessary());
         consumerDto.setPrice(consumer.getPrice());
         consumerDto.setRemarks(consumer.getRemarks());
+        consumerDto.setConsumerName(consumer.getConsumerName());
         return consumerDto;
     }
 

@@ -55,4 +55,16 @@ public class ConsumerDto {
     public void setNecessary(int necessary) {
         this.necessary = necessary;
     }
+
+    @Override
+    public String toString() {
+        return "ConsumerDto{" +
+                "consumerName='" + consumerName + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", necessary=" + necessary +
+                '}';
+    }
 }
