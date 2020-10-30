@@ -2,8 +2,9 @@ package com.yeff.consumption.exception;
 
 public enum ConsumptionErrorCode {
 
-    UNKNOWN_ERROR(111001001L, "unknown error"),
-    OKHTTP_ERROR(111001002L,"okhttp error,details --> {0}");
+    UNKNOWN_ERROR(100001001L, "unknown error"),
+    OKHTTP_ERROR(100001002L,"okhttp error,details --> {0}"),
+    NAME_EMPTY(100001003L,"name is empty");
 
     long code;
     String message;

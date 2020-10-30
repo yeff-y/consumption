@@ -2,6 +2,8 @@ package com.yeff.consumption.service.impl;
 
 
 import com.yeff.consumption.dto.ConsumerDto;
+import com.yeff.consumption.exception.ConsumptionErrorCode;
+import com.yeff.consumption.exception.ConsumptionExceptionFactory;
 import com.yeff.consumption.model.Consumer;
 import com.yeff.consumption.provider.ConsumerProvider;
 import com.yeff.consumption.service.ConsumerService;
@@ -9,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +35,10 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     @Override
     public List<ConsumerDto> getRecordByName(String name) {
+        if(StringUtils.isEmpty(name)){
+            logger.error("name can not be null when get record by name");
+            throw ConsumptionExceptionFactory.create(ConsumptionErrorCode.NAME_EMPTY);
+        }
         List<Consumer> consumerList = consumerProvider.selectRecords(name);
         List<ConsumerDto> consumerDtoList = new ArrayList<>();
         consumerDtoList = consumerList.parallelStream().map(consumer -> {
