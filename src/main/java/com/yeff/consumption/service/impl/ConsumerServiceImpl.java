@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 
@@ -44,27 +45,30 @@ public class ConsumerServiceImpl implements ConsumerService {
             logger.error("no such records about name: {}",name);
             throw ConsumptionExceptionFactory.create(ConsumptionErrorCode.NO_SUCH_NAME,name);
         }
-        List<ConsumerDto> consumerDtoList = new ArrayList<>();
-        consumerDtoList = consumerList.parallelStream().map(consumer -> {
-            ConsumerDto consumerDto = _buildConsumerDto(consumer);
-            return consumerDto;
-        }).collect(Collectors.toList());
-        return consumerDtoList;
+        return _ofListConsumerDTO(consumerList);
     }
 
     @Override
     public List<ConsumerDto> getRecordByTime(String date) {
         List<Consumer> consumers = consumerProvider.selectRecordsByDate(date);
         if(CollectionUtils.isEmpty(consumers)){
-            logger.error("no such records about name: {}",date);
+            logger.error("no records before that time: {}",date);
             throw ConsumptionExceptionFactory.create(ConsumptionErrorCode.NO_RECORD_BEFORE_THIS_DATE,date);
         }
-        List<ConsumerDto> consumerDtoList = new ArrayList<>();
-        consumerDtoList = consumers.parallelStream().map(consumer -> {
-            ConsumerDto consumerDto = _buildConsumerDto(consumer);
-            return consumerDto;
-        }).collect(Collectors.toList());
-        return consumerDtoList;
+        return _ofListConsumerDTO(consumers);
+    }
+
+    @Override
+    public List<ConsumerDto> getRecordByPeriod(String sDate, String eDate) {
+        Assert.notNull(sDate, "start date can not be null");
+        Assert.notNull(eDate, "end date can not be null");
+        List<Consumer> consumers = consumerProvider.getRecordsByPeriod(sDate, eDate);
+
+        if (CollectionUtils.isEmpty(consumers)) {
+            logger.error("no records between start date: {} and end date: {}", sDate, eDate);
+            throw ConsumptionExceptionFactory.create(ConsumptionErrorCode.NO_RECORDS_BETWEEN_PERIOD, sDate, eDate);
+        }
+        return _ofListConsumerDTO(consumers);
     }
 
     private ConsumerDto _buildConsumerDto(Consumer consumer) {
@@ -90,5 +94,14 @@ public class ConsumerServiceImpl implements ConsumerService {
         consumer.setRemarks(consumerDto.getRemarks());
         consumer.setUpdateTime(new Date());
         return consumer;
+    }
+
+    private  List<ConsumerDto> _ofListConsumerDTO(List<Consumer> consumers){
+        List<ConsumerDto> consumerDtoList = new ArrayList<>();
+        consumerDtoList = consumers.parallelStream().map(consumer -> {
+            ConsumerDto consumerDto = _buildConsumerDto(consumer);
+            return consumerDto;
+        }).collect(Collectors.toList());
+        return consumerDtoList;
     }
 }
