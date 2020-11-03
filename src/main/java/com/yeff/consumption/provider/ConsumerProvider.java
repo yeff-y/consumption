@@ -12,4 +12,6 @@ public interface ConsumerProvider {
     public List<Consumer> selectRecordsByName(String name);
 
     public List<Consumer> selectRecordsByDate(String date);
+
+    public List<Consumer> getRecordsByPeriod(String sDate,String eDate);
 }

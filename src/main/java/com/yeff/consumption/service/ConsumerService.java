@@ -12,4 +12,6 @@ public interface ConsumerService {
 
     List<ConsumerDto> getRecordByTime(String date);
 
+    List<ConsumerDto> getRecordByPeriod(String sDate, String eDate);
+
 }
