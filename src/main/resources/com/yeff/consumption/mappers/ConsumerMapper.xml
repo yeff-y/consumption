@@ -326,7 +326,4 @@
       necessary = #{necessary,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="selectByName" resultType="com.yeff.consumption.model.Consumer">
-    select * from consumer where consumer_name like #{consumerName}
-  </select>
 </mapper>

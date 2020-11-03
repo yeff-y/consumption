@@ -54,6 +54,25 @@ public class ConsumerProviderImpl implements ConsumerProvider {
         return consumerList;
     }
 
+    @Override
+    public List<Consumer> getRecordsByPeriod(String sDate, String eDate) {
+        Date startDate = _getDate(sDate);
+        Date endDate = _getDate(eDate);
+        ConsumerExample example = _constructPeriodExample(startDate, endDate);
+        return consumerMapper.selectByExample(example);
+
+    }
+
+    private ConsumerExample _constructPeriodExample(Date startDate, Date endDate) {
+        ConsumerExample example = new ConsumerExample();
+        ConsumerExample.Criteria criteria = example.createCriteria();
+
+        if(startDate != null && endDate != null){
+            criteria.andCreateTimeBetween(startDate,endDate);
+        }
+        return example;
+    }
+
     private Date _getDate(String date) {
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         String time = date;

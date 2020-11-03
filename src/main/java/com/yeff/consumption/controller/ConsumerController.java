@@ -37,4 +37,11 @@ public class ConsumerController {
         List<ConsumerDto> consumerDtoList = consumerService.getRecordByTime(date);
         return CResponse.successT(consumerDtoList);
     }
+
+    @GetMapping("/start/{sDate}/end/{eDate}")
+    public CResponse<List<ConsumerDto>> getRecordsByPeriod(@PathVariable("sDate") String sDate,
+                                                           @PathVariable("eDate")String eDate){
+        List<ConsumerDto> consumerDtoList = consumerService.getRecordByPeriod(sDate,eDate);
+        return CResponse.successT(consumerDtoList);
+    }
 }
