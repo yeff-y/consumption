@@ -84,7 +84,7 @@ public class ConsumerProviderImpl implements ConsumerProvider {
             criteria.andNecessaryEqualTo(consumer.getNecessary());
         }
         if (!StringUtils.isEmpty(consumer.getCreateTime())) {
-            criteria.andCreateTimeLessThan(consumer.getCreateTime());
+            criteria.andCreateTimeLessThanOrEqualTo(consumer.getCreateTime());
         }
         return example;
     }
