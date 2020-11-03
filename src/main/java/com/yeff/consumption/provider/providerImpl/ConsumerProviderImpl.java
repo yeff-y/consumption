@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -60,18 +59,16 @@ public class ConsumerProviderImpl implements ConsumerProvider {
         Date startDate = _getDate(sDate);
         Date endDate = _getDate(eDate);
         ConsumerExample example = _constructPeriodExample(startDate, endDate);
-        consumerMapper.selectByExample(example);
-        return null;
+        return consumerMapper.selectByExample(example);
+
     }
 
     private ConsumerExample _constructPeriodExample(Date startDate, Date endDate) {
         ConsumerExample example = new ConsumerExample();
         ConsumerExample.Criteria criteria = example.createCriteria();
-        List<Date> dateList = new ArrayList<>();
-        dateList.add(startDate);
-        dateList.add(endDate);
+
         if(startDate != null && endDate != null){
-            criteria.andCreateTimeIn(dateList);
+            criteria.andCreateTimeBetween(startDate,endDate);
         }
         return example;
     }
