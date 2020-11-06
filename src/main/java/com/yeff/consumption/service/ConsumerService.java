@@ -1,17 +1,17 @@
 package com.yeff.consumption.service;
 
-import com.yeff.consumption.dto.ConsumerDto;
+import com.yeff.consumption.dto.ConsumerDTO;
 
 import java.util.List;
 
 public interface ConsumerService {
 
-    void insertRecord(ConsumerDto consumerDto);
+    void insertRecord(ConsumerDTO consumerDto);
 
-    List<ConsumerDto> getRecordByName(String name);
+    List<ConsumerDTO> getRecordByName(String name);
 
-    List<ConsumerDto> getRecordByTime(String date);
+    List<ConsumerDTO> getRecordByTime(String date);
 
-    List<ConsumerDto> getRecordByPeriod(String sDate, String eDate);
+    List<ConsumerDTO> getRecordByPeriod(String sDate, String eDate);
 
 }

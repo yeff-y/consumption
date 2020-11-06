@@ -1,6 +1,5 @@
 package com.yeff.consumption.provider;
 
-import com.yeff.consumption.dto.ConsumerDto;
 import com.yeff.consumption.model.Consumer;
 
 import java.util.List;
