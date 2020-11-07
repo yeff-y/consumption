@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 //@ControllerAdvice
+
+//暂时不用这种方式，使用ExceptionHandler处理全局异常
 public class GlobalExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 

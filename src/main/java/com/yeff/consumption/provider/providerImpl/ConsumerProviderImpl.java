@@ -1,13 +1,11 @@
 package com.yeff.consumption.provider.providerImpl;
 
-import com.yeff.consumption.dto.ConsumerDto;
 import com.yeff.consumption.exception.ConsumptionErrorCode;
 import com.yeff.consumption.exception.ConsumptionExceptionFactory;
 import com.yeff.consumption.mappers.ConsumerMapper;
 import com.yeff.consumption.model.Consumer;
 import com.yeff.consumption.model.ConsumerExample;
 import com.yeff.consumption.provider.ConsumerProvider;
-import com.yeff.consumption.service.impl.ConsumerServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

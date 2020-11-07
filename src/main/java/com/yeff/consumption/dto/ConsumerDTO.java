@@ -1,12 +1,15 @@
 package com.yeff.consumption.dto;
 
-public class ConsumerDto {
+import java.util.Date;
+
+public class ConsumerDTO {
     private String consumerName;
     private String category;
     private Long price;
     private String description;
     private String remarks;
     private int necessary;
+    private Date createTime;
 
     public String getConsumerName() {
         return consumerName;
@@ -56,6 +59,14 @@ public class ConsumerDto {
         this.necessary = necessary;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         return "ConsumerDto{" +
@@ -65,6 +76,7 @@ public class ConsumerDto {
                 ", description='" + description + '\'' +
                 ", remarks='" + remarks + '\'' +
                 ", necessary=" + necessary +
+                ", createTime=" + createTime +
                 '}';
     }
 }

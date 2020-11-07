@@ -1,7 +1,7 @@
 package com.yeff.consumption.service.impl;
 
 
-import com.yeff.consumption.dto.ConsumerDto;
+import com.yeff.consumption.dto.ConsumerDTO;
 import com.yeff.consumption.exception.ConsumptionErrorCode;
 import com.yeff.consumption.exception.ConsumptionExceptionFactory;
 import com.yeff.consumption.model.Consumer;
@@ -30,7 +30,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     private ConsumerProvider consumerProvider;
 
     @Override
-    public void insertRecord(ConsumerDto consumerDto) {
+    public void insertRecord(ConsumerDTO consumerDto) {
         Consumer consumer = _of(consumerDto);
         if (consumerProvider.insert(consumer) != 1) {
             logger.error("add consumption record error");
@@ -39,7 +39,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public List<ConsumerDto> getRecordByName(String name) {
+    public List<ConsumerDTO> getRecordByName(String name) {
         List<Consumer> consumerList = consumerProvider.selectRecordsByName(name);
         if(CollectionUtils.isEmpty(consumerList)){
             logger.error("no such records about name: {}",name);
@@ -49,7 +49,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public List<ConsumerDto> getRecordByTime(String date) {
+    public List<ConsumerDTO> getRecordByTime(String date) {
         List<Consumer> consumers = consumerProvider.selectRecordsByDate(date);
         if(CollectionUtils.isEmpty(consumers)){
             logger.error("no records before that time: {}",date);
@@ -59,7 +59,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public List<ConsumerDto> getRecordByPeriod(String sDate, String eDate) {
+    public List<ConsumerDTO> getRecordByPeriod(String sDate, String eDate) {
         Assert.notNull(sDate, "start date can not be null");
         Assert.notNull(eDate, "end date can not be null");
         List<Consumer> consumers = consumerProvider.getRecordsByPeriod(sDate, eDate);
@@ -71,18 +71,19 @@ public class ConsumerServiceImpl implements ConsumerService {
         return _ofListConsumerDTO(consumers);
     }
 
-    private ConsumerDto _buildConsumerDto(Consumer consumer) {
-        ConsumerDto consumerDto = new ConsumerDto();
+    private ConsumerDTO _buildConsumerDto(Consumer consumer) {
+        ConsumerDTO consumerDto = new ConsumerDTO();
         consumerDto.setCategory(consumer.getCategory());
         consumerDto.setDescription(consumer.getDescription());
         consumerDto.setNecessary(consumer.getNecessary());
         consumerDto.setPrice(consumer.getPrice());
         consumerDto.setRemarks(consumer.getRemarks());
         consumerDto.setConsumerName(consumer.getConsumerName());
+        consumerDto.setCreateTime(consumer.getCreateTime());
         return consumerDto;
     }
 
-    private Consumer _of(ConsumerDto consumerDto){
+    private Consumer _of(ConsumerDTO consumerDto){
         Consumer consumer = new Consumer();
         consumer.setId(UUID.randomUUID().toString().replaceAll("-",""));
         consumer.setCategory(consumerDto.getCategory());
@@ -96,10 +97,10 @@ public class ConsumerServiceImpl implements ConsumerService {
         return consumer;
     }
 
-    private  List<ConsumerDto> _ofListConsumerDTO(List<Consumer> consumers){
-        List<ConsumerDto> consumerDtoList = new ArrayList<>();
+    private  List<ConsumerDTO> _ofListConsumerDTO(List<Consumer> consumers){
+        List<ConsumerDTO> consumerDtoList = new ArrayList<>();
         consumerDtoList = consumers.parallelStream().map(consumer -> {
-            ConsumerDto consumerDto = _buildConsumerDto(consumer);
+            ConsumerDTO consumerDto = _buildConsumerDto(consumer);
             return consumerDto;
         }).collect(Collectors.toList());
         return consumerDtoList;
