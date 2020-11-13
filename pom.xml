@@ -18,6 +18,7 @@
 		<mybatis.version>3.4.0</mybatis.version>
 		<mybatis.generator.version>1.3.2</mybatis.generator.version>
 		<mybatis.springboot.version>1.1.1</mybatis.springboot.version>
+		<fastjson.version>1.2.60</fastjson.version>
 	</properties>
 
 	<dependencies>
@@ -88,6 +89,25 @@
 			<groupId>org.logback-extensions</groupId>
 			<artifactId>logback-ext-spring</artifactId>
 			<version>0.1.2</version>>
+		</dependency>
+
+		<!--fast json-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+
+		<!-- security -->
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<version>2.0.7.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
 		<!-- 日志 -->
