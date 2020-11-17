@@ -1,11 +1,28 @@
+server:
+  port: 8080
 spring:
-  application:
-    name: consumption
+  freemarker:
+    checkTemplateLocation: false
+  mvc:
+    view:
+      prefix: /static
+      suffix: .html
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/consumption?serverTimezone=CST&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&autoReconnect=true
     username: root
     password: root
+  application:
+    name: consumption
 mybatis:
   mapper-locations:
     classpath: com/yeff/consumption/mappers/*.xml
+
+logging:
+  level:
+    com.glodon.springboot: debug
+  file:
+    name: ./logs/application-${spring.application.name}.log
+    max-history: 3
+
+
